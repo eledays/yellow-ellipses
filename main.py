@@ -5,17 +5,15 @@ import io
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QComboBox, QLineEdit, QPushButton, QLabel
 from PyQt6.QtGui import QPainter, QColor
-from PyQt6 import uic
+from UI import Ui_MainWindow
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
         
-        self.setGeometry(100, 100, 600, 600)
-
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.button.clicked.connect(self.click)
 
         self.ellipses = []
@@ -31,7 +29,7 @@ class MyWidget(QMainWindow):
         qp.end()
 
     def draw_flag(self, qp):
-        qp.setBrush(QColor(255, 255, 0))
+        qp.setBrush(QColor(*[random.randint(0, 255) for _ in range(3)]))
         while self.ellipses:
             args = self.ellipses.pop()
             qp.drawEllipse(*args)
